@@ -1,5 +1,5 @@
 
-  
+$(document).ready(function(){
 
 
 //create an array to hold the initial topics to choose from for the gif search
@@ -22,10 +22,10 @@ $.ajax({
       
 var data = response.data
 
-console.log(data)    
+   
       
 for(i=0; i<limit; i++){
-   $("#image-view").append("<div class='card' style='max-width:200px;'>" 
+   $("#image-view").prepend("<div class='card' style='max-width:200px;'>" 
    + '<img height="150" width="150" src=' + data[i].images.downsized_medium.url 
    + ' />' + "<figcaption><b>Rating: </b>" + data[i].rating + "</figcaption>")
       
@@ -36,24 +36,23 @@ for(i=0; i<limit; i++){
 
 //function to display the buttons compiled from our array of topics
 function renderButtons(){
-//prevents repeat buttons from being created
+//prevents repeat buttons from being created by just deleting before adding
   $("#buttons").empty()
 //loop through the array of topics
-    for(var i = 0; i < topics.length; i++){
+  for(var i = 0; i < topics.length; i++){
 //create a button for each topic in the array  
-     var a = $("<button>")
+      var a = $("<button>");
 //bootstrap style class
-     a.addClass("btn btn-light")
+      a.addClass("btn btn-light");
 //add the class of topic
-     a.addClass("topic")
+      a.addClass("topic");
 //add the data attribute 
-     a.attr("data-name", topics[i])
+      a.attr("data-name", topics[i]);
 //give each button text specific to the topic
-     a.text(topics[i])
+      a.text(topics[i]);
 //append the button to the buttons div
-     $("#buttons").append(a)
-
-    }
+      $("#buttons").append(a);
+  }
 }     
 
 //runs a function to create a button based on the input typed when the add topic button is clicked
@@ -75,6 +74,7 @@ $(document).on("click", ".topic", displayTopic);
 renderButtons();
 
 //just gets cats to display on the page automatically
+/*
 function displayCats(){
 
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=cat&api_key=GCc727r4Dk1UdzGryw1p7vGyOtx65UXG&limit=10";
@@ -96,3 +96,5 @@ function displayCats(){
   }
 
   displayCats();
+*/
+})
