@@ -13,7 +13,10 @@
 <body>
 <div class="container">
     <div class="row">
-        <div id="buttons"></div>
+        <div id="image-buttons"></div>
+    </div>
+    <div class="row">
+        <div id="movie-buttons"></div>
     </div>
 </div>
   
@@ -24,8 +27,23 @@
         </div>
         <div class="col-2">
             <form id="topic-form">
+                <label for="topic-input">GIPHY Search</label>
                 <input type="text" id="topic-input">
-                <input id="add-topic" type="submit" value="Add a Topic">
+                <input id="add-topic" type="submit" value="Add a Topic" class="btn btn-primary">
+                <label for="limit-input">How Many GIF</label>
+                <select id="limit">
+                    <option value="10">Default</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                </select>
+                <input id="reset-images" type="submit" value="Reset Images" class="btn btn-danger">
+            </form>
+            <br><br>
+            <form id="movie-form">
+                <label for="movie-input">Movie Search</label>
+                <input type="text" id="movie-input">
+                <input id="add-movie" type="submit" value="Add a Movie" class="btn btn-info">
             </form>
         </div>
     </div>    

@@ -1,7 +1,13 @@
 * { margin: 5px;
 }
 
-.card { display: inline-block;}
+.card { display: inline-block;
+}
 
 .container { margin-right: 10px;
-margin-left: 10px;}
+margin-left: 10px;
+}
+
+button { margin-right: 4px;
+            margin-bottom: 2px;
+}
