@@ -2,9 +2,9 @@
 $(document).ready(function(){
 
 // create an array to hold the initial topics to choose from for the gif search
-var topics = ["cat", "dog", "bird", "fish", "elephant", "cow", "goat", "tiger", "lizard", "sheep"]
+var topics = ["cat", "rat", "ox", "tiger", "rabbit", "dragon", "snake", "horse", "goat", "monkey", "rooster", "pig"]
 // defines the max number of images on the screen for the given topic
-var limit = 12;
+var limit = 10;
 // an array to hold the movies inputted by the user
 var movies = ["The Matrix", "John Wick", "Star Wars", "The Departed"];
 
@@ -32,9 +32,9 @@ for(i=0; i<limit; i++){
 }   
 // the on-click gif function that will trigger the animate or stop
 $(".gif").on("click", function(){
-
+  // create variable to capture the attribute of data-state
   var state = $(this).attr('data-state')
-
+  // run an if statement to check data state and alternate between animated and still
   if(state === 'still'){
     $(this).attr('src', $(this).attr('data-animate'))
     $(this).attr('data-state', 'animate')
@@ -103,6 +103,42 @@ $("#reset-images").on("click", function(){
   $("#image-view").empty();
 })
 
+// function to handle the ajax call to the omdb api and allow the user to search for info on specific movies
+function displayMovieInfo() {
+
+  var movie = $(this).attr('data-name')
+  var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy"
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(data){
+      $("#image-view").prepend("<br>" + '<img src=' + data.Poster + ' />' + "<br><hr>")
+      $("#image-view").prepend("<br><b>Plot: </b>" + data.Plot + "<br>")
+      $("#image-view").prepend("<br><b>Actors: </b>" + data.Actors + "<br>")
+      $("#image-view").prepend("<b>Director(s): </b>" + data.Director + "<br>")
+      $("#image-view").prepend("<b><br>Released: </b>" + data.Released + " ")
+      $("#image-view").prepend("<b>Runtime: </b>" + data.Runtime + "<br>")
+      $("#image-view").prepend("<b>Rated: </b>" + data.Rated + " ")
+      $("#image-view").prepend("<b>Title: </b>" + data.Title)
+      $("#image-view").prepend("<hr>")
+  })
+}
+// will add a button to a list which will trigger the actual movie info dump to the screen
+$("#add-movie").on("click", function(event){
+  event.preventDefault()
+
+  var movie = $("#movie-input").val().trim()
+
+  movies.push(movie)
+
+  renderButtons();
+
+  $("#movie-input").val("");
+})
+// tie the movie info dump to any item with the class movie on-click
+$(document).on("click", ".movie", displayMovieInfo);
+
 // just gets cats to display on the page automatically
 /*
 function displayCats(){
@@ -128,39 +164,5 @@ function displayCats(){
   displayCats();
 */
 
-// function to handle the ajax call to the omdb api and allow the user to search for info on specific movies
-function displayMovieInfo() {
 
-  var movie = $(this).attr('data-name')
-  var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy"
-
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(data){
-      $("#image-view").prepend("<br>" + '<img src=' + data.Poster + ' />' + "<br><hr>")
-      $("#image-view").prepend("<br><b>Plot: </b>" + data.Plot + "<br>")
-      $("#image-view").prepend("<br><b>Actors: </b>" + data.Actors + "<br>")
-      $("#image-view").prepend("<b>Director(s): </b>" + data.Director + "<br>")
-      $("#image-view").prepend("<b><br>Released: </b>" + data.Released + " ")
-      $("#image-view").prepend("<b>Runtime: </b>" + data.Runtime + "<br>")
-      $("#image-view").prepend("<b>Rated: </b>" + data.Rated + " ")
-      $("#image-view").prepend("<br><b>Title: </b>" + data.Title)
-      $("#image-view").prepend("<br><hr>")
-  })
-}
-// will add a button to a list which will trigger the actual movie info dump to the screen
-$("#add-movie").on("click", function(event){
-  event.preventDefault()
-
-  var movie = $("#movie-input").val().trim()
-
-  movies.push(movie)
-
-  renderButtons();
-
-  $("#movie-input").val("");
-})
-// tie the movie info dump to any item with the class movie on-click
-$(document).on("click", ".movie", displayMovieInfo);
 })
